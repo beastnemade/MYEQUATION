@@ -6,18 +6,14 @@ const Hero = () => {
     <section
       id="home"
       className="relative min-h-screen flex flex-col overflow-hidden"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+      }}
     >
-      {/* Background Image - No Blur */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
-
       {/* Main Content - Centered */}
       <div className="relative z-20 flex-1 flex flex-col items-center justify-center container mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in">
         {/* Main Heading */}

@@ -342,13 +342,33 @@ const ProgramOverview = () => {
 
           {/* Key Features Grid */}
           <motion.div
-            variants={itemVariants}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
             className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {benefits.map((benefit, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.05 }}
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    x: -50,
+                    y: 30
+                  },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    transition: {
+                      duration: 0.6,
+                      delay: index * 0.15,
+                      ease: "easeOut"
+                    }
+                  }
+                }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 className="group"
               >
@@ -432,11 +452,34 @@ const ProgramOverview = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-3 gap-6">
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  className="grid md:grid-cols-3 gap-6"
+                >
                   {projects.map((project, index) => (
                     <motion.div
                       key={index}
-                      whileHover={{ y: -5 }}
+                      variants={{
+                        hidden: {
+                          opacity: 0,
+                          y: 50,
+                          scale: 0.9
+                        },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                          transition: {
+                            duration: 0.7,
+                            delay: index * 0.2,
+                            ease: "easeOut"
+                          }
+                        }
+                      }}
+                      whileHover={{ y: -8, scale: 1.02 }}
                       className="group"
                     >
                       <Card className="h-full border border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg overflow-hidden">
@@ -460,7 +503,7 @@ const ProgramOverview = () => {
                       </Card>
                     </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </CardContent>
             </Card>
           </motion.div>

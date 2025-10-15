@@ -63,7 +63,6 @@ export default function PromoBanner() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="flex items-center gap-1 sm:gap-2">
-              <span className="text-lg sm:text-2xl">🎯</span>
               <div>
                 <div className="mb-0 sm:mb-1">
                   <span className="text-white font-bold text-xs sm:text-base md:text-lg italic">The Complete SolidWorks & ANSYS Course : From Zero to Expert! </span>

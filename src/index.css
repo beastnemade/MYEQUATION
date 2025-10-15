@@ -1,0 +1,127 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+/* Custom overrides */
+.h-10 {
+  height: 5.5rem !important;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 210 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+
+    --primary: 200 85% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 15 85% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 15% 50%;
+
+    --accent: 200 95% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 30% 90%;
+    --input: 210 30% 90%;
+    --ring: 200 85% 45%;
+
+    --radius: 0.75rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(200, 85%, 45%), hsl(200, 70%, 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(15, 85%, 60%), hsl(25, 80%, 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(200, 85%, 45%) 0%, hsl(15, 85%, 60%) 100%);
+
+    --shadow-soft: 0 4px 20px -2px hsl(200 85% 45% / 0.15);
+    --shadow-medium: 0 8px 30px -4px hsl(200 85% 45% / 0.25);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 210 30% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 25% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 210 25% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 200 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 15 85% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 25% 15%;
+    --muted-foreground: 210 10% 65%;
+
+    --accent: 200 95% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 25% 20%;
+    --input: 210 25% 20%;
+    --ring: 200 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Testimonials carousel improvements */
+.testimonial-carousel {
+  touch-action: pan-y pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Smooth transitions for all devices */
+.testimonial-slide {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Prevent text selection during swipe */
+.testimonial-carousel * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Ensure smooth animations on mobile */
+@media (max-width: 768px) {
+  .testimonial-slide {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}

@@ -1,0 +1,78 @@
+/* Desktop/Laptop styles - for screens 768px and above */
+@media (min-width: 768px) {
+
+    /* Footer Logo - Desktop */
+    .footer-logo-desktop {
+        height: 5rem; /* 80px - increased base desktop */
+        width: auto;
+    }
+
+    /* Large desktop screens */
+    @media (min-width: 1024px) {
+        .footer-logo-desktop {
+            height: 6rem; /* 96px */
+        }
+    }
+
+    /* Extra large screens */
+    @media (min-width: 1280px) {
+        .footer-logo-desktop {
+            height: 7rem; /* 112px */
+        }
+    }
+
+    /* Navbar Logo */
+    .navbar-logo {
+        height: 6.5rem;
+        /* 56px */
+        width: auto;
+    }
+
+    /* Footer Grid */
+    .footer-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 2rem;
+    }
+
+    /* Footer Text */
+    .footer-heading {
+        font-size: 1.125rem;
+        /* 18px */
+        font-weight: 600;
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        /* 14px */
+    }
+
+    /* Social Icons */
+    .social-icon {
+        width: 2.5rem;
+        /* 40px */
+        height: 2.5rem;
+        /* 40px */
+    }
+
+    .social-icon svg {
+        width: 1.25rem;
+        /* 20px */
+        height: 1.25rem;
+        /* 20px */
+    }
+
+    /* Navbar */
+    .navbar-height {
+        height: 4.5rem;
+        /* 72px */
+    }
+
+    /* Mobile menu hidden on desktop */
+    .mobile-menu {
+        display: none;
+    }
+
+    .desktop-nav {
+        display: flex;
+    }
+}

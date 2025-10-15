@@ -1,0 +1,153 @@
+/* Mobile styles - for screens below 768px */
+@media (max-width: 767px) {
+
+  /* Footer Logo - Mobile Responsive */
+  .footer-logo {
+    height: 5rem;
+    /* 80px - increased base mobile size */
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Larger mobile screens (640px+) */
+  .footer-logo {
+    height: 6rem;
+    /* 96px for sm screens */
+  }
+
+  /* Navbar Logo */
+  .navbar-logo {
+    height: 2.5rem;
+    /* 40px */
+    width: auto;
+  }
+
+  /* Footer Grid */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Footer Text */
+  .footer-heading {
+    font-size: 1rem;
+    /* 16px */
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    /* 14px */
+    line-height: 1.5;
+  }
+
+  /* Social Icons */
+  .social-icon {
+    width: 2rem;
+    /* 32px */
+    height: 2rem;
+    /* 32px */
+  }
+
+  .social-icon svg {
+    width: 1rem;
+    /* 16px */
+    height: 1rem;
+    /* 16px */
+  }
+
+  /* Navbar */
+  .navbar-height {
+    height: 3.5rem;
+    /* 56px */
+  }
+
+  /* Desktop nav hidden on mobile */
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  /* Mobile menu items */
+  .mobile-nav-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  /* Mobile menu button */
+  .mobile-menu-btn {
+    padding: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  /* Footer sections spacing */
+  .footer-section {
+    margin-bottom: 0.5rem;
+    /* Further reduced from 1rem */
+  }
+
+  .footer-section:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Remove extra spacing around logo container */
+  .footer-logo-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Reduce spacing in footer grid */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    /* Further reduced from 1rem */
+  }
+
+  /* Contact info mobile styling */
+  .contact-info {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* Social icons container */
+  .social-icons-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  /* Reduce overall footer padding */
+  footer {
+    padding-top: 0 !important;
+    /* Remove top padding */
+    padding-bottom: 1.5rem !important;
+    /* Keep bottom padding */
+  }
+
+  /* Mobile footer container */
+  footer .container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Minimize text spacing */
+  .footer-text {
+    font-size: 0.875rem;
+    /* 14px */
+    line-height: 1.3;
+    /* Tighter line height */
+    margin-top: 0.25rem;
+    /* Minimal top margin */
+  }
+
+  /* Remove default spacing from space-y classes on mobile */
+  .space-y-0>*+* {
+    margin-top: 0 !important;
+  }
+}

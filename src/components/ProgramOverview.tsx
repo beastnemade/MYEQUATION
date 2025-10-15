@@ -29,6 +29,7 @@ import ANSYS from "../../Ansys.png"
 import SW from "../../SolidWorks.png"
 import FAQ from "../../FQA1.png"
 import Certificate from "../../Certificate.png";
+import CRBG from "../../CERTI.png";
 import Project1 from "../../Project1.png"
 import Project2 from "../../Project2.png"
 import Project3 from "../../Project3.png"
@@ -650,15 +651,25 @@ const ProgramOverview = () => {
 
           {/* Certification Section */}
           <motion.div variants={itemVariants}>
-            <Card className="border-0 shadow-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white overflow-hidden">
-              <CardContent className="p-8 md:p-12 text-center space-y-8">
+            <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm relative overflow-hidden">
+              {/* Background Pattern */}
+              <div
+                className="absolute inset-0 opacity-1 bg-no-repeat sm:bg-cover"
+                style={{
+                  backgroundImage: `url(${CRBG})`,
+                  backgroundSize: 'auto',
+                  backgroundPosition: 'center 70%',
+                }}
+              />
+
+              <CardContent className="relative z-10 p-8 md:p-12 text-center space-y-8">
                 {/* Text Content */}
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-4 italic">
+                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 italic">
                       Get your hard work certified
                     </h3>
-                    <p className="text-blue-100 text-lg mb-6">
+                    <p className="text-lg text-gray-600 mb-6">
                       Upon successful completion of your program, you will earn a valuable industry-recognized certificate that effectively showcases your newly acquired expertise and professional skills, while simultaneously opening doors to exciting new career opportunities and advancement possibilities in your chosen profession.
                     </p>
                   </div>
@@ -670,9 +681,8 @@ const ProgramOverview = () => {
                     <img
                       src={Certificate}
                       alt="Industry Certificate"
-                      className="w-full h-auto rounded-lg"
+                      className="w-full h-auto rounded-lg shadow-lg"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
                   </div>
                 </div>
               </CardContent>
@@ -934,29 +944,6 @@ const ProgramOverview = () => {
                     </form>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Call to Action */}
-          <motion.div variants={itemVariants} className="text-center">
-            <Card className="border-0 shadow-xl bg-gradient-to-r from-green-500 to-blue-600 text-white">
-              <CardContent className="py-12">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 italic">
-                  Become One of Thousands of Successful Students
-                </h3>
-                <p className="text-green-100 text-lg mb-6 max-w-2xl mx-auto">
-                  Fast-track your career through expert-led training in
-                  industry-standard tools like SolidWorks and ANSYS
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleSmoothScroll("enrollment-form")}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg cursor-pointer"
-                >
-                  Start Your Journey Today
-                </motion.button>
               </CardContent>
             </Card>
           </motion.div>

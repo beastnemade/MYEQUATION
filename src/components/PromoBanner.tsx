@@ -1,20 +1,24 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-
+import bg from "../../bg.png"
 export default function PromoBanner() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
 
   useEffect(() => {
     const handleScroll = () => {
-      const isMobile = window.innerWidth < 768; // md breakpoint
-      
-      if (isMobile) {
+      const isMobileView = window.innerWidth < 768; // md breakpoint
+      setIsMobile(isMobileView);
+      setScreenWidth(window.innerWidth);
+
+      if (isMobileView) {
         // On mobile, show banner when footer is visible
         const footerSection = document.getElementById('footer');
         if (footerSection) {
           const footerRect = footerSection.getBoundingClientRect();
           const footerTop = footerRect.top;
-          
+
           // Show banner when footer starts to come into view
           setIsVisible(footerTop < window.innerHeight);
         }
@@ -24,7 +28,7 @@ export default function PromoBanner() {
         if (mentorsSection) {
           const mentorsRect = mentorsSection.getBoundingClientRect();
           const mentorsBottom = mentorsRect.bottom;
-          
+
           // Show banner when we've scrolled past the mentors section
           setIsVisible(mentorsBottom < window.innerHeight);
         }
@@ -56,8 +60,14 @@ export default function PromoBanner() {
         y: isVisible ? 0 : 100
       }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`bg-gradient-to-r from-blue-600 to-purple-600 py-2 md:py-4 fixed bottom-0 left-0 right-0 z-50 shadow-xl border-t border-blue-500/30 backdrop-blur-sm ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'
+      className={`py-2 md:py-4 fixed bottom-0 left-0 right-0 z-50 shadow-xl border-t border-blue-500/30 backdrop-blur-sm ${isVisible ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundSize: `${screenWidth}px auto`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-4">

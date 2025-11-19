@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import ProgramOverview from "@/components/ProgramOverview";
 import Footer from "@/components/Footer";
 
+
 const Index = () => {
   return (
     <div className="min-h-screen">

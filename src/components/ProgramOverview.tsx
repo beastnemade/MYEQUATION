@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,15 +17,14 @@ import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle,
   Clock,
-  Award,
   Users,
   BookOpen,
   Zap,
-  Target,
   Lightbulb,
-  Star,
-  Quote,
+  Play,
+  ChevronDown,
 } from "lucide-react";
+import { testimonials, type Testimonial } from "../lib/testimonials";
 import ANSYS from "../../Ansys.png"
 import SW from "../../SolidWorks.png"
 import FAQ from "../../FQA1.png"
@@ -35,18 +35,176 @@ import Project2 from "../../Project2.png"
 import Project3 from "../../Project3.png"
 import imag from "../../nvidia.jpg"
 import enr from "../../Enroll.jpg"
-import { useState, useEffect, useRef } from "react";
+
+// TestimonialCard Component
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+  variant?: 'text' | 'video';
+}
+
+function TestimonialCard({ testimonial, variant = 'text' }: TestimonialCardProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  if (variant === 'video' && testimonial.media_type === 'video') {
+    return (
+      <div className="relative group rounded-xl sm:rounded-2xl overflow-hidden h-56 sm:h-64 md:h-72">
+        <img
+          src={testimonial.media_url}
+          alt={`${testimonial.name} testimonial`}
+          className="w-full h-full object-cover"
+        />
+        <button
+          onClick={() => setIsPlaying(true)}
+          className="absolute inset-0 flex items-center justify-center group"
+        >
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <Play className="w-6 h-6 sm:w-8 sm:h-8 text-gray-900 ml-1" fill="currentColor" />
+          </div>
+        </button>
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-3 sm:p-4 md:p-5">
+          <p className="text-white font-semibold text-sm sm:text-base">{testimonial.name}</p>
+          <p className="text-white/90 text-xs sm:text-sm">{testimonial.title}</p>
+        </div>
+        {isPlaying && (
+          <div className="absolute inset-0 bg-black/90 flex items-center justify-center z-50">
+            <video
+              src={testimonial.video_url}
+              controls
+              autoPlay
+              className="w-full h-full"
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col">
+      <div className="p-4 sm:p-5 flex flex-col">
+        <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
+          {testimonial.content}
+        </p>
+        <div className="min-w-0 mt-auto">
+          <p className="font-semibold text-gray-900 text-sm sm:text-base">{testimonial.name}</p>
+          <p className="text-xs sm:text-sm text-gray-600 truncate">
+            {testimonial.title}, {testimonial.company}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// TestimonialsSection Component
+function TestimonialsSection() {
+  const [showAll, setShowAll] = useState(false);
+
+  // On mobile, show only first 4 testimonials unless "Read More" is clicked
+  const displayedTestimonials = showAll ? testimonials : testimonials.slice(0, 4);
+
+  return (
+    <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm">
+      <CardContent className="p-8 md:p-12">
+        <div className="mb-8 sm:mb-10 md:mb-12 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 italic">
+            Success Stories
+          </h2>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            Hear what our students have to say about their experience
+          </p>
+        </div>
+
+        {/* Desktop view - show all testimonials */}
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 items-start">
+          {testimonials.slice(0, 4).map((testimonial) => (
+            <div key={testimonial.id} className="w-full">
+              <TestimonialCard testimonial={testimonial} variant="text" />
+            </div>
+          ))}
+
+          {testimonials.length > 4 && (
+            <>
+              {testimonials.slice(4, 8).map((testimonial, idx) => (
+                <div key={testimonial.id} className="w-full">
+                  <TestimonialCard
+                    testimonial={testimonial}
+                    variant={idx === 0 || idx === 2 ? 'video' : 'text'}
+                  />
+                </div>
+              ))}
+
+              {testimonials.length > 8 && (
+                <>
+                  {testimonials.slice(8, 12).map((testimonial, idx) => (
+                    <div key={testimonial.id} className="w-full">
+                      <TestimonialCard
+                        testimonial={testimonial}
+                        variant={idx === 1 ? 'video' : 'text'}
+                      />
+                    </div>
+                  ))}
+
+                  {testimonials.length > 12 && (
+                    <>
+                      {testimonials.slice(12, 16).map((testimonial, idx) => (
+                        <div key={testimonial.id} className="w-full">
+                          <TestimonialCard
+                            testimonial={testimonial}
+                            variant={idx === 0 || idx === 1 || idx === 3 ? 'video' : 'text'}
+                          />
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Mobile view - show limited testimonials with Read More button */}
+        <div className="sm:hidden">
+          <div className="grid grid-cols-1 gap-4">
+            {displayedTestimonials.map((testimonial) => (
+              <div key={testimonial.id} className="w-full">
+                <TestimonialCard
+                  testimonial={testimonial}
+                  variant={testimonial.media_type === 'video' ? 'video' : 'text'}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Read More button - only show on mobile if there are more testimonials */}
+          {testimonials.length > 4 && !showAll && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setShowAll(true)}
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl"
+              >
+                Read More
+                <ChevronDown className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 const ProgramOverview = () => {
-  const [isPaused, setIsPaused] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-  const autoPlayRef = useRef<NodeJS.Timeout>();
+  // Commented out carousel-related state and refs since Success Stories section is commented out
+  // const [isPaused, setIsPaused] = useState(false);
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const [isTransitioning, setIsTransitioning] = useState(false);
+  // const carouselRef = useRef<HTMLDivElement>(null);
+  // const touchStartX = useRef(0);
+  // const touchEndX = useRef(0);
+  // const autoPlayRef = useRef<NodeJS.Timeout>();
 
-  const testimonials = [
+  /* const testimonials = [
     {
       name: 'Michael Chen',
       role: 'Product Manager',
@@ -131,10 +289,10 @@ const ProgramOverview = () => {
       extendedContent: 'Excellent depth of content and hands-on experience. The course exceeded my expectations in every aspect. The curriculum was cutting-edge, covering the latest developments in AI and machine learning. The lab sessions were particularly impressive, allowing us to work with real datasets and industry-standard tools. The instructors brought years of industry experience, making the learning both theoretical and practical.',
       rating: 5,
     },
-  ];
+  ]; */
 
-  // Carousel functionality
-  const totalSlides = testimonials.length;
+  // Commented out carousel functionality since Success Stories section is commented out
+  /* const totalSlides = testimonials.length;
   const slidesToShow = {
     mobile: 1,
     tablet: 2,
@@ -182,7 +340,6 @@ const ProgramOverview = () => {
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
-  // Auto-play functionality
   useEffect(() => {
     if (!isPaused) {
       autoPlayRef.current = setInterval(() => {
@@ -201,7 +358,6 @@ const ProgramOverview = () => {
     };
   }, [isPaused, currentIndex]);
 
-  // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     setIsPaused(true);
@@ -224,7 +380,7 @@ const ProgramOverview = () => {
     }
 
     setTimeout(() => setIsPaused(false), 1000);
-  };
+  }; */
 
   const handleSmoothScroll = (targetId: string) => {
     const targetElement = document.getElementById(targetId);
@@ -689,114 +845,8 @@ const ProgramOverview = () => {
             </Card>
           </motion.div>
 
-          {/* Reviews/Testimonials Section */}
-          <motion.div variants={itemVariants}>
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-gray-900 to-blue-900 text-white overflow-hidden">
-              <CardContent className="p-8 md:p-12">
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4 italic">Success Stories</h2>
-                  <p className="text-blue-200 text-lg max-w-3xl mx-auto">
-                    Hear what our students have to say about their experience
-                  </p>
-                </div>
-
-                <div className="relative">
-                  {/* Carousel Container */}
-                  <div
-                    className="overflow-hidden testimonial-carousel"
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
-                  >
-                    <div
-                      ref={carouselRef}
-                      className="flex transition-transform duration-300 ease-in-out testimonial-slide"
-                      style={{
-                        transform: `translateX(-${(currentIndex * (100 / slidesToShowCurrent))}%)`,
-                      }}
-                      onTouchStart={handleTouchStart}
-                      onTouchMove={handleTouchMove}
-                      onTouchEnd={handleTouchEnd}
-                    >
-                      {testimonials.map((testimonial, index) => (
-                        <motion.div
-                          key={index}
-                          className={`flex-shrink-0 px-2 sm:px-3 ${slidesToShowCurrent === 1 ? 'w-full' :
-                            slidesToShowCurrent === 2 ? 'w-1/2' : 'w-1/3'
-                            }`}
-                          whileHover={{ y: -5, scale: 1.02 }}
-                        >
-                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6 md:p-8 transition-all duration-300 hover:bg-white/15 border border-white/20 h-full">
-                            <Quote className="w-10 h-10 text-blue-400 mb-4 opacity-70" />
-
-                            <div className="flex gap-1 mb-4">
-                              {[...Array(testimonial.rating)].map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className="w-5 h-5 text-yellow-400 fill-yellow-400"
-                                />
-                              ))}
-                            </div>
-
-                            <p className="text-gray-200 mb-4 leading-relaxed text-sm sm:text-base lg:text-lg min-h-[100px] sm:min-h-[120px]">
-                              "{testimonial.content}"
-                            </p>
-
-                            <div className="flex items-center gap-4 pt-6 border-t border-white/20">
-                              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-500/30 ring-2 ring-blue-400/50 flex items-center justify-center">
-                                <span className="text-white font-bold text-lg sm:text-xl">
-                                  {testimonial.name.charAt(0)}
-                                </span>
-                              </div>
-                              <div>
-                                <h4 className="text-white font-bold text-sm sm:text-base">{testimonial.name}</h4>
-                                <p className="text-gray-300 text-xs sm:text-sm">{testimonial.role}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Navigation Dots */}
-                  <div className="flex justify-center mt-8 gap-2">
-                    {Array.from({ length: Math.ceil(totalSlides / slidesToShowCurrent) }).map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToSlide(index * slidesToShowCurrent)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${Math.floor(currentIndex / slidesToShowCurrent) === index
-                          ? 'bg-blue-400 scale-125'
-                          : 'bg-white/30 hover:bg-white/50'
-                          }`}
-                        aria-label={`Go to slide ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Navigation Arrows - Hidden on mobile */}
-                  <button
-                    onClick={prevSlide}
-                    className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20"
-                    aria-label="Previous testimonial"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-
-                  <button
-                    onClick={nextSlide}
-                    className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20"
-                    aria-label="Next testimonial"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+          {/* Testimonials Section */}
+          <TestimonialsSection />
 
           {/* FAQ Section */}
           <motion.div variants={itemVariants}>
